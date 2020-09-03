@@ -80,7 +80,7 @@
                 <tr>
                   <td>
                     {% for i in batsman_name %}
-                      <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
+                      <input type="checkbox" value="{{i.batsman}}" id="batsman"/>  {{i.batsman}} <br>
                     {% endfor %}
                   </td>
                 </tr>
@@ -89,22 +89,11 @@
           </div>
         </div>
         <div class="btn-group">
-          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Range Of Runs
-          </button>
-          <div class="dropdown-menu">
-            <div class="checkbox form-check">
-              <table id="tab4">
-                <tr>
-                  <td>
-                    <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
-                    <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
-                    <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
+          <select name="tab4" id="tab4" class="custom-select" onchange="top_rcb_batsmen()">
+            <option value=1500>0 - 1500</option>
+            <option value=3000>500 - 3000</option>
+            <option value=5000>3000 - 5000</option>
+          </select>
           <input type="button" value="Show graph" onclick="top_rcb_batsmen()">
         </div>
       </div>
@@ -123,7 +112,7 @@
                 <tr>
                   <td>
                     {% for i in ump_nation %}
-                      <input type="checkbox" value="{{i.nationality}}" id="umpires"/>{{i.nationality}} <br>
+                      <input type="checkbox" value="{{i.nationality}}" id="umpires"/>  {{i.nationality}} <br>
                     {% endfor %}
                   </td>
                 </tr>
@@ -147,7 +136,7 @@
                 <tr>
                   <td>
                     {% for i in seasons %}
-                      <input type="checkbox" value="{{i.season}}" id="seasons"/>{{i.season}}<br>
+                      <input type="checkbox" value="{{i.season}}" id="seasons"/>  {{i.season}}<br>
                     {% endfor %}
                   </td>
                 </tr>
@@ -165,7 +154,7 @@
                 <tr>
                   <td>
                     {% for i in query_set %}
-                      <input type="checkbox" value="{{i.batting_team}}" id="teams"/>{{i.batting_team}} <br>
+                      <input type="checkbox" value="{{i.batting_team}}" id="teams"/>  {{i.batting_team}} <br>
                     {% endfor %}
                   </td>
                 </tr>

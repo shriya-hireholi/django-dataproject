@@ -63,11 +63,15 @@ function top_rcb_batsmen(){
       }
     }
 
+    var runs = new Array();
+    var chkbox = document.getElementById('tab4').value;
+    runs.push(chkbox);
+
     const topBatsmen= [];
     fetch("http://127.0.0.1:8000/batsman/", {method: 'POST', headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      }, body: JSON.stringify(batsman)})
+      }, body: JSON.stringify({batsmans: batsman, run: runs})})
     .then(function(resp){
         return resp.json();
     })

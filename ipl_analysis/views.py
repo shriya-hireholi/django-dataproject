@@ -4,7 +4,6 @@ from django.db.models import Sum, Count, Q
 from .models import Deliveries, Matches, Umpires
 from django.http import JsonResponse
 import json
-from collections import Counter
 
 
 # Create your views here.
@@ -54,19 +53,73 @@ def total_runs_scored(request):
 @csrf_exempt
 def top_batsman_rcb(request):
     json_data = json.loads(request.body)
-
-    if len(json_data) > 0:
+    print(json_data)
+    if len(json_data['run']) == 0:
+        print("hello")
         query_set = dict(Deliveries.objects.values_list('batsman').filter(
             batting_team='Royal Challengers Bangalore').filter(
-                batsman__in=json_data).annotate(
+                batsman__in=json_data['batsmans']).annotate(
                     batsman_runs=Sum('batsman_runs')).order_by('-batsman_runs')[:11])
-    else:
-        query_set = dict(Deliveries.objects.values_list('batsman').filter(
-            batting_team='Royal Challengers Bangalore').annotate(
-                batsman_runs=Sum('batsman_runs')).order_by(
-                '-batsman_runs')[:11])
+        return JsonResponse(query_set, safe=False)
+    elif len(json_data['batsmans']) == 0:
+        for i in json_data['run']:
+            if i == '1500':
+                start = 0
+                query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').annotate(
+                            batsman_runs=Sum('batsman_runs')).filter(
+                                batsman_runs__range=(start, 1500)).order_by(
+                                    '-batsman_runs')[:11])
+            elif i == '3000':
+                start = 1500
+                query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').annotate(
+                            batsman_runs=Sum('batsman_runs')).filter(
+                                batsman_runs__range=(start, 3000)).order_by(
+                                    '-batsman_runs')[:11])
+            else:
+                start = 3000
+                query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').annotate(
+                            batsman_runs=Sum('batsman_runs')).filter(
+                                batsman_runs__range=(start, 5000)).order_by(
+                                    '-batsman_runs')[:11])
 
-    return JsonResponse(query_set, safe=False)
+        return JsonResponse(query_set, safe=False)
+    else:
+        for i in json_data['run']:
+            if i == '1500':
+                start = 0
+                query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').filter(
+                            batsman__in=json_data['batsmans']).annotate(
+                            batsman_runs=Sum('batsman_runs')).filter(
+                                batsman_runs__range=(start, 1500)).order_by(
+                                    '-batsman_runs')[:11])
+            elif i == '3000':
+                start = 1500
+                query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').filter(
+                            batsman__in=json_data['batsmans']).annotate(
+                            batsman_runs=Sum('batsman_runs')).filter(
+                                batsman_runs__range=(start, 3000)).order_by(
+                                    '-batsman_runs')[:11])
+            else:
+                start = 3000
+                query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').filter(
+                            batsman__in=json_data['batsmans']).annotate(
+                            batsman_runs=Sum('batsman_runs')).filter(
+                                batsman_runs__range=(start, 5000)).order_by(
+                                    '-batsman_runs')[:11])
+
+        return JsonResponse(query_set, safe=False)
 
 
 @csrf_exempt
@@ -82,7 +135,6 @@ def foreign_umpire(request):
             nationality='India').annotate(umpires_count=Count('umpire')))
 
     return JsonResponse(query_set, safe=False)
-
 
 
 @csrf_exempt
