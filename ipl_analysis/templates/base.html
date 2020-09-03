@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+      <meta content="utf-8" http-equiv="encoding">
+
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+      
+      <!-- Highcharts -->
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+
+      <!-- js file -->
+      {% load staticfiles %}
+          <script src="{% static 'index.js' %}"></script>
+
+      <title>IPL Data Analysis</title>
+  </head>
+  <body>
+
+    <div class="container-fluid" style="text-align: center;">
+      <header>IPL data visulaization</header><br><br>
+
+      <!-- TOTAL RUNS GRAPH -->
+      <div class="row">
+        <div class="col-md-12, col-sm-12" id = "total-runs-scored"></div><br><br>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Batting Teams
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab1">
+                <tr>
+                  <td>
+                    {% for i in query_set %}
+                      <input type="checkbox" value="{{i.batting_team}}" id="team"/>{{i.batting_team}} <br>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Batting Teams
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab2">
+                <tr>
+                  <td>
+                    {% for i in query_set %}
+                      <input type="checkbox" value="{{i.batting_team}}" id="team"/>{{i.batting_team}} <br>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <input type="button" value="Show graph" onclick="total_runs_team()">
+        </div>
+      </div>
+
+      <!-- TOP BATSMAN GRAPH -->
+      <div class="row">
+        <div class="col-md-12, col-sm-12" id = "top-rcb-batsmen"></div><br><br>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Batsman Name
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab3">
+                <tr>
+                  <td>
+                    {% for i in batsman_name %}
+                      <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Range Of Runs
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab4">
+                <tr>
+                  <td>
+                    <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
+                    <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
+                    <input type="checkbox" value="{{i.batsman}}" id="batsman"/>{{i.batsman}} <br>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <input type="button" value="Show graph" onclick="top_rcb_batsmen()">
+        </div>
+      </div>
+
+      <!-- UMPIRES GRAPH -->
+      <div class="row">
+        <div class="col-md-12, col-sm-12" id = "foreign-umpires"></div><br><br>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Umpires Nation
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab5">
+                <tr>
+                  <td>
+                    {% for i in ump_nation %}
+                      <input type="checkbox" value="{{i.nationality}}" id="umpires"/>{{i.nationality}} <br>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <input type="button" value="Show graph" onclick="foreign_umpires()">
+        </div>          
+      </div>
+
+      <!-- SEASONS GAMES TEAMS GRAPH -->
+      <div class="row">
+        <div class="col-md-12, col-sm-12" id = "team-games-season"></div><br><br>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Seasons
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab6">
+                <tr>
+                  <td>
+                    {% for i in seasons %}
+                      <input type="checkbox" value="{{i.season}}" id="seasons"/>{{i.season}}<br>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Teams
+          </button>
+          <div class="dropdown-menu">
+            <div class="checkbox form-check">
+              <table id="tab7">
+                <tr>
+                  <td>
+                    {% for i in query_set %}
+                      <input type="checkbox" value="{{i.batting_team}}" id="teams"/>{{i.batting_team}} <br>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <input type="button" value="Show graph" onclick="teams_seasons_games()">
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
