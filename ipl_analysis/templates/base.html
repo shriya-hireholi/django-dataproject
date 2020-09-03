@@ -46,22 +46,12 @@
           </div>
         </div>
         <div class="btn-group">
-          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Batting Teams
-          </button>
-          <div class="dropdown-menu">
-            <div class="checkbox form-check">
-              <table id="tab2">
-                <tr>
-                  <td>
-                    {% for i in query_set %}
-                      <input type="checkbox" value="{{i.batting_team}}" id="team"/>{{i.batting_team}} <br>
-                    {% endfor %}
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
+          <select name="tab2" id="tab2" class="custom-select" onchange="total_runs_team()">
+            <option value=''>Games Played</option>
+            <option value=7000>0 - 7k</option>
+            <option value=14000>7k - 14k</option>
+            <option value=19000>14k - 19k</option>
+          </select>
           <input type="button" value="Show graph" onclick="total_runs_team()">
         </div>
       </div>
@@ -90,8 +80,9 @@
         </div>
         <div class="btn-group">
           <select name="tab4" id="tab4" class="custom-select" onchange="top_rcb_batsmen()">
+            <option value=''>Select runs</option>
             <option value=1500>0 - 1500</option>
-            <option value=3000>500 - 3000</option>
+            <option value=3000>1500 - 3000</option>
             <option value=5000>3000 - 5000</option>
           </select>
           <input type="button" value="Show graph" onclick="top_rcb_batsmen()">

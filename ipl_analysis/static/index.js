@@ -9,11 +9,15 @@ function total_runs_team(){
       }
     }
 
+    var games = new Array();
+    var chkbox = document.getElementById('tab2').value;
+    games.push(chkbox);
+
     const runsScored= [];
     fetch("http://127.0.0.1:8000/runs/", {method: 'POST', headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      }, body: JSON.stringify(team)})
+      }, body: JSON.stringify({teams: team, game: games})})
     .then(function(resp){
         return resp.json();
     })

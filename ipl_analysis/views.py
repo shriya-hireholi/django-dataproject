@@ -33,35 +33,75 @@ def base(request):
 @csrf_exempt
 def total_runs_scored(request):
     json_data = json.loads(request.body)
-    if len(json_data) > 0:
-        query_set = dict(Deliveries.objects.values_list('batting_team').filter(
-            batting_team__in=json_data).annotate(
-            total_runs=Count('total_runs')
-            ).order_by('batting_team'))
+    print(json_data)
+    if len(json_data['teams']) == 0:
+        for i in json_data['game']:
+            if i == '7000':
+                start = 0
+                query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').annotate(total_runs=Count(
+                        'total_runs')).filter(
+                            total_runs__range=(start, 7000)).order_by(
+                                    'batting_team'))
+            elif i == '14000':
+                print(4000)
+                start = 7000
+                query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').annotate(total_runs=Count(
+                        'total_runs')).filter(
+                            total_runs__range=(start, 14000)).order_by(
+                                    'batting_team'))
+            else:
+                start = 14000
+                query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').annotate(total_runs=Count(
+                        'total_runs')).filter(
+                            total_runs__range=(start, 19000)).order_by(
+                                    'batting_team'))
+        return JsonResponse(query_set, safe=False)
+    elif json_data['game'] == ['']:
+        query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').filter(
+                        batting_team__in=json_data['teams']).annotate(
+                            total_runs=Count('total_runs')).order_by(
+                                    'batting_team'))
+        
+        return JsonResponse(query_set, safe=False)
+    else:
+        for i in json_data['game']:
+            if i == '7000':
+                start = 0
+                query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').filter(
+                        batting_team__in=json_data['teams']).annotate(
+                            total_runs=Count('total_runs')).filter(
+                            total_runs__range=(start, 7000)).order_by(
+                                    'batting_team'))
+            elif i == '3000':
+                start = 1500
+                query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').filter(
+                        batting_team__in=json_data['teams']).annotate(
+                            total_runs=Count('total_runs')).filter(
+                            total_runs__range=(start, 14000)).order_by(
+                                    'batting_team'))
+            else:
+                start = 3000
+                query_set = dict(Deliveries.objects.values_list(
+                    'batting_team').filter(
+                        batting_team__in=json_data['teams']).annotate(
+                            total_runs=Count('total_runs')).filter(
+                            total_runs__range=(start, 19000)).order_by(
+                                    'batting_team'))
 
         return JsonResponse(query_set, safe=False)
-
-    query_set = dict(
-        Deliveries.objects.values_list('batting_team').annotate(
-            total_runs=Count('total_runs')
-        ).order_by('batting_team')
-    )
-
-    return JsonResponse(query_set, safe=False)
 
 
 @csrf_exempt
 def top_batsman_rcb(request):
     json_data = json.loads(request.body)
     print(json_data)
-    if len(json_data['run']) == 0:
-        print("hello")
-        query_set = dict(Deliveries.objects.values_list('batsman').filter(
-            batting_team='Royal Challengers Bangalore').filter(
-                batsman__in=json_data['batsmans']).annotate(
-                    batsman_runs=Sum('batsman_runs')).order_by('-batsman_runs')[:11])
-        return JsonResponse(query_set, safe=False)
-    elif len(json_data['batsmans']) == 0:
+    if len(json_data['batsmans']) == 0:
         for i in json_data['run']:
             if i == '1500':
                 start = 0
@@ -86,6 +126,15 @@ def top_batsman_rcb(request):
                         batting_team='Royal Challengers Bangalore').annotate(
                             batsman_runs=Sum('batsman_runs')).filter(
                                 batsman_runs__range=(start, 5000)).order_by(
+                                    '-batsman_runs')[:11])
+
+        return JsonResponse(query_set, safe=False)
+    elif json_data['run'] == ['']:
+        query_set = dict(Deliveries.objects.values_list(
+                    'batsman').filter(
+                        batting_team='Royal Challengers Bangalore').filter(
+                            batsman__in=json_data['batsmans']).annotate(
+                            batsman_runs=Sum('batsman_runs')).order_by(
                                     '-batsman_runs')[:11])
 
         return JsonResponse(query_set, safe=False)
@@ -140,7 +189,6 @@ def foreign_umpire(request):
 @csrf_exempt
 def matches_team_season(request):
     json_data = json.loads(request.body)
-    print(json_data)
     teams_season = {}
     teams_season_one = {}
     teams_season_two = {}
@@ -149,7 +197,6 @@ def matches_team_season(request):
             'season',
             'first_team',
             'second_team').filter(season__in=json_data['season']))
-        print(query_set)
         for data in query_set:
             season = int(data['season'])
             team_one = data['first_team']
@@ -239,6 +286,5 @@ def matches_team_season(request):
                         teams_season_one[key][i] = teams_season_one[key][i] + teams_season_two[key][i]
 
         teams_season = dict(sorted(teams_season_one.items()))
-
 
     return JsonResponse(teams_season, safe=False)
