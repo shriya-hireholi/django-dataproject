@@ -25,7 +25,6 @@ Then run the following command:
 
 ```bash  
 python3 manage.py create_db
-python3 manage.py makemigrations
 python3 manage.py migrate
 ```
 <hr>
