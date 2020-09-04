@@ -42,7 +42,7 @@ function total_runs_team(){
             yAxis: {
                 min: 0,
                 title: {
-                    text: "No. of Games Played"
+                    text: "Total Runs Scored"
                 }
             },
             series: [
@@ -111,6 +111,7 @@ function top_rcb_batsmen(){
             ]
         });
     });
+
 }
 
 function foreign_umpires(){
@@ -237,8 +238,3 @@ function teams_seasons_games(){
         });   
     });
 }
-
-// total_runs_team();
-// top_rcb_batsmen();
-// foreign_umpires();
-// teams_seasons_games();

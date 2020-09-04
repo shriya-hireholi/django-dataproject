@@ -7,23 +7,10 @@ class Deliveries(models.Model):
     inning = models.IntegerField()
     batting_team = models.CharField(max_length=50)
     bowling_team = models.CharField(max_length=50)
-    over = models.IntegerField()
-    ball = models.IntegerField()
     batsman = models.CharField(max_length=50)
-    non_striker = models.CharField(max_length=50)
     bowler = models.CharField(max_length=50)
-    is_super_over = models.IntegerField()
-    wide_runs = models.IntegerField()
-    bye_runs = models.IntegerField()
-    legbye_runs = models.IntegerField()
-    noball_runs = models.IntegerField()
-    penalty_runs = models.IntegerField()
     batsman_runs = models.IntegerField()
-    extra_runs = models.IntegerField()
     total_runs = models.IntegerField()
-    player_dismissed = models.CharField(max_length=50)
-    dismissal_kind = models.CharField(max_length=50)
-    fielder = models.CharField(max_length=50)
 
 
 class Matches(models.Model):
