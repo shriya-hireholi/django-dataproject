@@ -18,8 +18,7 @@ pip3 install -r requirements.txt
 
 ### To create databse and tables
 
-In *.env* file put down the username and password of your postgres and inside *django_ipl* folder under *settings.py* in *DATABASES* insert the username and password of your postgres.
-
+In *.env* file put down the username and password of your postgres.
 
 Then run the following command:
 
