@@ -85,9 +85,9 @@ password = os.getenv("username")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': username,
-        'USER': password,
-        'PASSWORD': 'postgres',
+        'NAME': 'django_ipl',
+        'USER': username,
+        'PASSWORD': password,
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
