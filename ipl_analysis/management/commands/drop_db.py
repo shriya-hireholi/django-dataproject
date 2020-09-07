@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Command(BaseCommand):
-    help = 'Insert data into models'
+    help = 'Drop DB'
 
     def handle(self, *args, **options):
         username = os.getenv("username")

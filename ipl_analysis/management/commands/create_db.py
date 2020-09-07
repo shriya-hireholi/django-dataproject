@@ -7,7 +7,7 @@ load_dotenv()
 
 
 class Command(BaseCommand):
-    help = 'Insert data into models'
+    help = 'Create DB'
 
     def handle(self, *args, **options):
         username = os.getenv("username")
