@@ -8,8 +8,8 @@ Move to the folder  django-dataproject-shriya
 
 Create a virtual environment and activate it:
 ```bash
-$ virtualenv venv
-$ source venv/bin/activate
+virtualenv venv
+source venv/bin/activate
 ```
 
 Install all dependencies
